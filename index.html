@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="manifest" href="/sw-post-read-test/manifest.json">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    img {
+      display: block;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <form method="POST" action="./" enctype="multipart/form-data">
+    <input type="file" name="file"> <button type="submit">Submit</button>
+    or <button type="button" class="display">Display image without submitting</button>
+  </form>
+  
+  <script>
+    navigator.serviceWorker.register('sw.js');
+    
+    function displayFile(file) {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+      document.body.append(img);
+    }
+    
+    navigator.serviceWorker.onmessage = (event) => {
+      const file = event.data.file;
+      displayFile(file);
+      document.body.append(event.data.ptext);
+    };
+    
+    document.querySelector('.display').addEventListener('click', (event) => {
+      const input = document.querySelector('input[type=file]');
+      displayFile(input.files[0]);
+    });
+  </script>
+</body>
+</html>

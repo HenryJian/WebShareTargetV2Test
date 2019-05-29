@@ -1,0 +1,35 @@
+{
+  "name": "R3",
+  "short_name": "r3",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff",
+  "theme_color": "#f78f21",
+  "icons": [
+    {
+      "src": "https://share-target--squoosh.netlify.com/assets/icon-large.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    }
+  ],
+  "share_target": {
+    "action": "/sw-post-read-test/",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "ptitle",
+      "text": "ptext",
+      "files": [
+        {
+          "name": "image_file",
+          "accept": ["image/*"]
+        },
+        {
+          "name": "text_file_version_2",
+          "accept": ["text/*"]
+        }
+      ]
+    }
+  }
+}
